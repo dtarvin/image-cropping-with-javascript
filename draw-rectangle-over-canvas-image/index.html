@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draw Rectangle Over Canvas Image</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
+        integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <img src="./images/mountain.jpg" alt="" id="mountain" width="1024" height="768">
+    <p>Canvas:</p>
+    <canvas id="myCanvas" width="2048" height="1536">Your browser does not support the HTML5 canvas tag.</canvas>
+    <script>
+        window.onload = function () {
+            var canvas = document.getElementById("myCanvas");
+            var context = canvas.getContext("2d");
+            var img = document.getElementById("mountain");
+
+            context.drawImage(img, 10, 10);
+
+            context.beginPath();
+            context.rect(188, 50, 200, 100);
+            //context.fillStyle = "yellow";
+            //context.fill();
+            context.lineWidth = 1;
+            context.strokeStyle = "black";
+            context.stroke();
+        }
+
+    </script>
+</body>
+
+</html>
