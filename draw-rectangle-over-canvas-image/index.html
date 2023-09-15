@@ -11,31 +11,86 @@
             padding: 0;
             box-sizing: border-box;
         }
+        canvas {
+            margin: 0;
+        }
     </style>
     <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
         integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <img src="./images/mountain.jpg" alt="" id="mountain" width="1024" height="768">
-    <p>Canvas:</p>
+    <img src="./images/mountain.jpg" alt="" id="mountain" width="0" height="0">
+    <!-- <p>Canvas:</p> -->
     <canvas id="myCanvas" width="2048" height="1536">Your browser does not support the HTML5 canvas tag.</canvas>
     <script>
         window.onload = function () {
+            console.log('window.innerWidth = ', window.innerWidth);
+            console.log('window.innerHeight = ', window.innerHeight);
+            let new_ar_width = 1024;
+            let new_ar_height = 576;
             var canvas = document.getElementById("myCanvas");
             var context = canvas.getContext("2d");
             var img = document.getElementById("mountain");
 
-            context.drawImage(img, 10, 10);
+            context.drawImage(img, 0, 0);
 
-            context.beginPath();
-            context.rect(188, 50, 200, 100);
+            let shape = {
+                x: 0, y: 0, width: new_ar_width, height: new_ar_height, color: 'transparent'
+            };
+            let is_dragging = false;
+            let startX;
+            let startY;
+
+            let is_mouse_in_shape = function (x, y, shape) {
+                let shape_left = shape.x;
+                console.log('shape_left: ', shape_left);
+                let shape_right = shape.x + shape.width;
+                let shape_top = shape.y;
+                let shape_bottom = shape.y + shape.height;
+
+                if (x > shape_left && x < shape_right && y > shape_top && y < shape_bottom) {
+                    return true;
+                }
+
+                return false;
+            }
+
+            let mouse_down = function (event) {
+                event.preventDefault();
+
+                startX = parseInt(event.clientX);
+                startY = parseInt(event.clientY);
+
+                console.log('startX: ', startX, 'startY: ', startY);
+
+                if (is_mouse_in_shape(startX, startY, shape)) {
+                    is_dragging = true;
+                    console.log('mouse is in shape');
+                    return;
+                }
+            }
+
+            //context.beginPath();
+            //context.rect(188, 50, 200, 100);
             //context.fillStyle = "yellow";
             //context.fill();
-            context.lineWidth = 1;
-            context.strokeStyle = "black";
-            context.stroke();
+            //context.lineWidth = 1;
+            //context.strokeStyle = "black";
+            //context.stroke();
+
+            let draw_rectangle = function () {
+                //context.clearRect(0, 0, 1024, 576);
+                //context.lineWidth = 1;
+                context.strokeStyle = "black";
+                context.strokeRect(shape.x, shape.y, shape.width, shape.height);
+                context.stroke();
+            }
+
+            draw_rectangle();
         }
+
+        
 
     </script>
 </body>
